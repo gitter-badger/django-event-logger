@@ -1,2 +1,1 @@
-# django-event-logger
-Event logger for django applications.
+An event logger for Django applications.
