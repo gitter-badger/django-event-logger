@@ -1,13 +1,14 @@
+from django.conf import settings
 from django.db import models
 
 
 class Event(models.Model):
-    invoker = models.CharField(max_length=255)  # The user who triggered an event.
+    account = models.ForeignKey(settings.AUTH_USER_MODEL)  # The account an action was triggered on.
     action = models.CharField(max_length=255)  # The action the user tried to preform.
-    response = models.IntegerField()  # The response given by the server.
+    response = models.IntegerField()  # The response code returned by the server.
     ip = models.GenericIPAddressField()  # The IP of the invoker.
-    additional = models.CharField(max_length=255, blank=True, null=True)  # Additional information (optional).
     time = models.DateTimeField(auto_now_add=True)
+    additional = models.CharField(max_length=255, default='N/A')  # Additional information (optional).
 
-    def __unicode__(self):
+    def __str__(self):
         return self.action
