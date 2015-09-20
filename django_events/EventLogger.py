@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from .models import Event
 
 
-def log_event(action, response, request, additional=None, invoker=None):
+def log_event(action, response, request, additional='N/A', invoker=None):
     auth_user = get_user_model()
 
     action = action
@@ -10,7 +10,7 @@ def log_event(action, response, request, additional=None, invoker=None):
     additional = additional
 
     request = request
-    if request.user is None:
+    if request.user.is_anonymous():
         if invoker is None:
             raise Exception('No invoker was specified, and no user is detected!')
         invoker = auth_user.objects.get(username=invoker)
@@ -31,6 +31,6 @@ def log_event(action, response, request, additional=None, invoker=None):
 def get_logs(account=None):
     if account:
         # We want logs for a specific account.
-        return Event.objects.filter(account=account)
+        return Event.objects.filter(account=account).order_by('-id')
     # We want logs in general.
     return Event.objects.all()
