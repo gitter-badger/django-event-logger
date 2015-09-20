@@ -1,0 +1,28 @@
+language: python
+
+python:
+  - 2.6
+  - 2.7
+  - 3.1
+  - 3.2
+  - 3.3
+  - 3.4
+
+services:
+  - postgresql
+
+env:
+  - DJANGO=1.6
+  - DJANGO=1.7
+  - DJANGO=1.8
+
+before_install:
+ - psql -c 'create database travis_ci;' -U postgres
+ - export PYTHONPATH=$HOME/builds/receive/django-event-logger
+ - export PIP_USE_MIRRORS=true
+
+install:
+  - pip install Django==$DJANGO psycopg2
+
+script:
+  - python runtests.py
