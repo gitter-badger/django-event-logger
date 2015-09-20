@@ -24,7 +24,7 @@ def log_event(action, response, request, additional=None, invoker=None):
     else:
         ip = request.META.get('REMOTE_ADDR')
 
-    Event(invoker=self.invoker, action=saction, response=response, ip=ip,
+    Event(invoker=invoker, action=action, response=response, ip=ip,
           additional=additional).save()
 
 
