@@ -13,7 +13,11 @@ def log_event(action, response, request, additional='N/A', invoker=None):
     if request.user.is_anonymous():
         if invoker is None:
             raise Exception('No invoker was specified, and no user is detected!')
-        invoker = auth_user.objects.get(username=invoker)
+        try:
+            invoker = auth_user.objects.get(username=invoker)
+        except:
+            # The invoker specified doesn't exist.
+            invoker = None
     else:
         invoker = request.user
 
@@ -24,8 +28,9 @@ def log_event(action, response, request, additional='N/A', invoker=None):
     else:
         ip = request.META.get('REMOTE_ADDR')
 
-    Event(account=invoker, action=action, response=response, ip=ip,
-          additional=additional).save()
+    if invoker is not None:
+        Event(account=invoker, action=action, response=response, ip=ip,
+              additional=additional).save()
 
 
 def get_logs(account=None):
