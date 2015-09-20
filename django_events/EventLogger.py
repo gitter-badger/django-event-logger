@@ -5,25 +5,27 @@ from .models import Event
 def log_event(action, response, request, additional=None, invoker=None):
     auth_user = get_user_model()
 
-    self.action = action
-    self.response = response
-    self.additional = additional
+    action = action
+    response = response
+    additional = additional
 
-    self.request = request
+    request = request
     if request.user is None:
-        self.invoker = auth_user.objects.get(username=invoker)
+        if invoker is None:
+            raise Exception('No invoker was specified, and no user is detected!')
+        invoker = auth_user.objects.get(username=invoker)
     else:
-        self.invoker = request.user
+        invoker = request.user
 
     # Let's grab the current IP of the user.
-    x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
     else:
-        ip = self.request.META.get('REMOTE_ADDR')
+        ip = request.META.get('REMOTE_ADDR')
 
-    Event(invoker=self.invoker, action=self.action, response=self.response, ip=ip,
-          additional=self.additional).save()
+    Event(invoker=self.invoker, action=saction, response=response, ip=ip,
+          additional=additional).save()
 
 
 def get_logs(account=None):
