@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from .models import Event
 
 
-def log_event(self, action, response, request, additional=None, invoker=None):
+def log_event(action, response, request, additional=None, invoker=None):
     auth_user = get_user_model()
 
     self.action = action
