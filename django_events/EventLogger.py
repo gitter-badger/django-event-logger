@@ -29,6 +29,6 @@ def log_event(action, response, request, additional=None, invoker=None):
 def get_logs(account=None):
     if account:
         # We want logs for a specific account.
-        return Event.objects.filter(invoker=account)
+        return Event.objects.filter(account=account)
     # We want logs in general.
     return Event.objects.all()
