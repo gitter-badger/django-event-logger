@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name = 'django-event-logger',
-    version = '0.5.0',
+    version = '0.8.5',
     packages = find_packages(),
 
     install_requires = ['Django'],
@@ -10,5 +10,5 @@ setup(
     author_email = 'unaffiliate@outlook.com',
     description = 'An easy-to-use event logger for Django.',
     keywords = 'django events logger logging',
-    download_url = 'https://github.com/misread/django-event-logger/tarball/0.5.0',
+    download_url = 'https://github.com/receive/django-event-logger/tarball/v0.8.5',
 )
