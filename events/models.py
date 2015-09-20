@@ -1,11 +1,9 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models
-
-AuthUser = get_user_model()
 
 
 class Event(models.Model):
-    account = models.ForeignKey(AuthUser)  # The account an action was triggered on.
+    account = models.ForeignKey(settings.AUTH_USER_MODEL)  # The account an action was triggered on.
     action = models.CharField(max_length=255)  # The action the user tried to preform.
     response = models.IntegerField()  # The response code returned by the server.
     ip = models.GenericIPAddressField()  # The IP of the invoker.
