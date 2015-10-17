@@ -8,7 +8,7 @@ class Event(models.Model):
     response = models.IntegerField()  # The response code returned by the server.
     ip = models.GenericIPAddressField()  # The IP of the invoker.
     time = models.DateTimeField(auto_now_add=True)
-    additional = models.CharField(max_length=255, default='N/A')  # Additional information (optional).
+    additional = models.TextField(default='N/A')  # Additional information (optional).
 
     def __str__(self):
         return self.action
